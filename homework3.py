@@ -5,6 +5,7 @@ Python Module for Youtube data
 '''
 
 # Import required packages
+import os
 import pandas as pd
 import sqlite3 as sql
 
@@ -36,6 +37,10 @@ def  create_dataframe(db_path):
     RETURNS:
         the query results as a pandas dataframe
     '''
+	# Check filepath validity
+	if not os.path.exists(db_path):
+        raise ValueError('Please enter valid database path.')
+	
     # Create sqlite connection to specified database
     # Reference: https://www.dataquest.io/blog/python-pandas-databases/
     conn = sql.connect(db_path)
@@ -51,7 +56,7 @@ def  create_dataframe(db_path):
     try:
         return pd.read_sql_query(query_str,conn)
     except:
-        raise ValueError("Please enter valid database path.")
+        raise ValueError("Issue connecting to sqlite database.")
     
 def test_create_dataframe(df_arg):
     '''
@@ -72,7 +77,8 @@ def test_create_dataframe(df_arg):
              'category_id' in df_arg.columns and 
              'language' in df_arg.columns)
 
-    test2 = True # TODO: Update
+    df_vid_lang = df_arg.drop(columns=['category_id']).drop_duplicates()
+    test2 = df_arg.shape[0] == df_vid_lang.shape[0]
     
     test3 = df_arg.shape[0]>10
     

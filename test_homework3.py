@@ -29,9 +29,9 @@ class DB_Test(unittest.TestCase):
         Asserts the column names of the dataframe match specs.
         '''
         df = create_dataframe("homework-3-iankirkman/class.db")
-        self.assertTrue(len(df.columns)==3 &
-                        'video_id' in df.columns &
-                        'category_id' in df.columns &
+        self.assertTrue(len(df.columns)==3 and
+                        'video_id' in df.columns and
+                        'category_id' in df.columns and
                         'language' in df.columns)
     
     def test_numrows(self):
@@ -56,9 +56,9 @@ class DB_Test(unittest.TestCase):
         df_cat_lang = df.drop(columns=['video_id']).drop_duplicates()
         
         # Confirm all three columns can be a key, and any combo of 2 cannot:
-        self.assertTrue(df.shape[0] == df_nodups.shape[0] &
-                        df.shape[0] > df_vid_cat.shape[0] &
-                        df.shape[0] > df_vid_lang.shape[0] &
+        self.assertTrue(df.shape[0] == df_nodups.shape[0] and
+                        df.shape[0] > df_vid_cat.shape[0] and
+                        df.shape[0] > df_vid_lang.shape[0] and
                         df.shape[0] > df_cat_lang.shape[0])
     
 if __name__ == '__main__':
